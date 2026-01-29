@@ -1,38 +1,38 @@
 diff --git a/node_modules/jiti/lib/jiti.cjs b/node_modules/jiti/lib/jiti.cjs
-index b3b9ad2..e995e9e 100644
+index b3b9ad2..9b1f9b8 100644
 --- a/node_modules/jiti/lib/jiti.cjs
 +++ b/node_modules/jiti/lib/jiti.cjs
 @@ -7,10 +7,13 @@ function onError(err) {
  
  const nativeImport = (id) => import(id);
  
-+// Require the inlined babel transform
-+const babelTransform = require("../../../vendor/babel-inline.cjs");
++// Require the lazy babel transform loader
++const loadBabelTransform = require("../../../vendor/babel-inline.cjs");
 +
  let _transform;
  function lazyTransform(...args) {
    if (!_transform) {
 -    _transform = require("../dist/babel.cjs");
-+    _transform = babelTransform;
++    _transform = loadBabelTransform();
    }
    return _transform(...args);
  }
 diff --git a/node_modules/jiti/lib/jiti.mjs b/node_modules/jiti/lib/jiti.mjs
-index 9040754..34c4b91 100644
+index 9040754..5a2fc31 100644
 --- a/node_modules/jiti/lib/jiti.mjs
 +++ b/node_modules/jiti/lib/jiti.mjs
 @@ -7,10 +7,13 @@ function onError(err) {
  
  const nativeImport = (id) => import(id);
  
-+// Import the inlined babel transform
-+import babelTransform from "../../../vendor/babel-inline.cjs";
++// Import the lazy babel transform loader
++import loadBabelTransform from "../../../vendor/babel-inline.cjs";
 +
  let _transform;
  function lazyTransform(...args) {
    if (!_transform) {
 -    _transform = createRequire(import.meta.url)("../dist/babel.cjs");
-+    _transform = babelTransform;
++    _transform = loadBabelTransform();
    }
    return _transform(...args);
  }
