@@ -36,9 +36,9 @@ $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
 	for f in node_modules/eslint/lib/shared/*.js; do \
 		cp "$$f" "dist/shared/$$(basename $$f .js).cjs"; \
 	done
-	sed -i.bak 's/`formatters`,`$${t}\.js/`formatters`,`$${t}.cjs/g' $(DIST_FILES) && rm $(DIST_FILES).bak
-	sed -i.bak 's|,`\.\./`,`cli-engine`|,`cli-engine`|g' $(DIST_FILES) && rm $(DIST_FILES).bak
-	sed -i.bak 's|require("../../shared/\([^"]*\)")|require("../../shared/\1.cjs")|g' dist/cli-engine/formatters/*.cjs && rm dist/cli-engine/formatters/*.bak
+	sed -i 's/`formatters`,`$${t}\.js/`formatters`,`$${t}.cjs/g' $(DIST_FILES)
+	sed -i 's|,`\.\./`,`cli-engine`|,`cli-engine`|g' $(DIST_FILES)
+	sed -i 's|require("../../shared/\([^"]*\)")|require("../../shared/\1.cjs")|g' dist/cli-engine/formatters/*.cjs
 
 .PHONY: publish
 publish: node_modules
