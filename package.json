@@ -21,7 +21,6 @@
     "eslint-config-silverwind": "118.0.1",
     "tsdown": "0.20.1",
     "tsdown-config-silverwind": "1.7.3",
-    "tsup": "8.5.1",
     "typescript": "5.9.3",
     "typescript-config-silverwind": "14.0.0",
     "updates": "17.0.8",
