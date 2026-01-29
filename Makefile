@@ -14,17 +14,7 @@ vendor/formatters/%.js: node_modules/eslint/lib/cli-engine/formatters/%.js
 
 .PHONY: vendor
 vendor: node_modules $(VENDOR_FORMATTERS)
-	@echo "/**" > vendor/formatters/index.js
-	@echo " * Bundled formatters for eslint-cli-bundle" >> vendor/formatters/index.js
-	@echo " * " >> vendor/formatters/index.js
-	@echo " * These formatters are vendored from ESLint v9.39.2 to avoid" >> vendor/formatters/index.js
-	@echo " * dynamic import issues when the bundle is installed as a dependency." >> vendor/formatters/index.js
-	@echo " * " >> vendor/formatters/index.js
-	@echo " * License: MIT (https://github.com/eslint/eslint/blob/main/LICENSE)" >> vendor/formatters/index.js
-	@echo " */" >> vendor/formatters/index.js
-	@echo "" >> vendor/formatters/index.js
-	@echo "\"use strict\";" >> vendor/formatters/index.js
-	@echo "" >> vendor/formatters/index.js
+	@echo "\"use strict\";" > vendor/formatters/index.js
 	@echo "module.exports = {" >> vendor/formatters/index.js
 	@echo "	stylish: require(\"./stylish\")," >> vendor/formatters/index.js
 	@echo "	html: require(\"./html\")," >> vendor/formatters/index.js
