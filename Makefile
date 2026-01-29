@@ -28,7 +28,6 @@ $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
 	npx tsdown
 	chmod +x $(DIST_FILES)
 	cp node_modules/jiti/dist/babel.cjs dist/babel.cjs
-	cp node_modules/eslint/lib/cli-engine/formatters/formatters-meta.json dist/node_modules/eslint/lib/cli-engine/formatters/
 
 .PHONY: publish
 publish: node_modules
