@@ -7,7 +7,7 @@ export default defineConfig({
   shims: true,
   clean: true,
   target: "node20",
-  external: ["fsevents"],
+  external: ["fsevents", "jiti"],
   esbuildOptions: opts => {
     opts.legalComments = "none";
   }
