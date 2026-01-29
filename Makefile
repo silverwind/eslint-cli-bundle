@@ -45,6 +45,7 @@ $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
 	chmod +x $(DIST_FILES)
 	cp node_modules/jiti/dist/babel.cjs dist/babel.cjs
 	cp node_modules/eslint/lib/types/config-api.d.ts dist/config.d.ts
+	cp node_modules/eslint/lib/types/index.d.ts dist/api.d.ts
 
 .PHONY: update
 update: node_modules
