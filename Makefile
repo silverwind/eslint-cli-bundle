@@ -3,6 +3,7 @@ DIST_FILES := dist/eslint.js
 
 node_modules: package-lock.json
 	npm install --no-save
+	npx patch-package
 	@touch node_modules
 
 .PHONY: deps
@@ -19,15 +20,16 @@ lint-fix: node_modules
 	npx tsc
 
 .PHONY: test
-test: node_modules
+test: $(DIST_FILES)
 	node dist/eslint.js
 
 .PHONY: build
 build: node_modules $(DIST_FILES)
 
 $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
-	npx tsup
+	npx tsdown
 	chmod +x $(DIST_FILES)
+	cp node_modules/jiti/dist/babel.cjs dist/babel.cjs
 
 .PHONY: publish
 publish: node_modules

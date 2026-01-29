@@ -1,0 +1,13 @@
+diff --git a/node_modules/eslint/lib/eslint/eslint.js b/node_modules/eslint/lib/eslint/eslint.js
+index 92e90b3..102ed6e 100644
+--- a/node_modules/eslint/lib/eslint/eslint.js
++++ b/node_modules/eslint/lib/eslint/eslint.js
+@@ -1223,7 +1223,7 @@ class ESLint {
+ 			} catch {
+ 				formatterPath = path.resolve(
+ 					__dirname,
+-					"../",
++					"../node_modules/eslint/lib",
+ 					"cli-engine",
+ 					"formatters",
+ 					`${normalizedFormatName}.js`,
