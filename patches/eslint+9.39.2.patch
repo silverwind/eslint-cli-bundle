@@ -1,12 +1,23 @@
 diff --git a/node_modules/eslint/lib/eslint/eslint.js b/node_modules/eslint/lib/eslint/eslint.js
-index 92e90b3..36a4bc8 100644
+index 92e90b3..06e2e2a 100644
 --- a/node_modules/eslint/lib/eslint/eslint.js
 +++ b/node_modules/eslint/lib/eslint/eslint.js
-@@ -1223,7 +1223,7 @@ class ESLint {
+@@ -13,7 +13,7 @@ const { existsSync } = require("node:fs");
+ const fs = require("node:fs/promises");
+ const os = require("node:os");
+ const path = require("node:path");
+-const { pathToFileURL } = require("node:url");
++const { pathToFileURL, fileURLToPath } = require("node:url");
+ const { SHARE_ENV, Worker } = require("node:worker_threads");
+ const { version } = require("../../package.json");
+ const { defaultConfig } = require("../config/default-config");
+@@ -1222,8 +1222,8 @@ class ESLint {
+ 				formatterPath = resolve(npmFormat, getPlaceholderPath(cwd));
  			} catch {
  				formatterPath = path.resolve(
- 					__dirname,
+-					__dirname,
 -					"../",
++					typeof __dirname !== "undefined" ? __dirname : path.dirname(fileURLToPath(import.meta.url)),
 +					"node_modules/eslint/lib",
  					"cli-engine",
  					"formatters",
