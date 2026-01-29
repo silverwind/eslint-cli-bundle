@@ -40,10 +40,12 @@ test: $(DIST_FILES)
 .PHONY: build
 build: node_modules $(DIST_FILES)
 
-$(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
+$(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts vendor/babel-inline.cjs
 	npx tsdown
 	chmod +x $(DIST_FILES)
-	cp node_modules/jiti/dist/babel.cjs dist/babel.cjs
+
+vendor/babel-inline.cjs: node_modules/jiti/dist/babel.cjs scripts/generate-babel-inline.cjs
+	node scripts/generate-babel-inline.cjs
 
 .PHONY: update
 update: node_modules
