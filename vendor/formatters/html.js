@@ -1,10 +1,6 @@
 /**
  * @fileoverview HTML reporter
  * @author Julian Laval
- * 
- * Vendored from ESLint v9.39.2
- * Original: node_modules/eslint/lib/cli-engine/formatters/html.js
- * License: MIT (https://github.com/eslint/eslint/blob/main/LICENSE)
  */
 "use strict";
 

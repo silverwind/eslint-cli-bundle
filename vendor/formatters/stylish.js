@@ -1,10 +1,6 @@
 /**
  * @fileoverview Stylish reporter
  * @author Sindre Sorhus
- * 
- * Vendored from ESLint v9.39.2
- * Original: node_modules/eslint/lib/cli-engine/formatters/stylish.js
- * License: MIT (https://github.com/eslint/eslint/blob/main/LICENSE)
  */
 "use strict";
 

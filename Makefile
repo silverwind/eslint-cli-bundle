@@ -1,10 +1,37 @@
 SOURCE_FILES := node_modules
 DIST_FILES := dist/eslint.js
+VENDOR_FORMATTERS := vendor/formatters/stylish.js vendor/formatters/html.js vendor/formatters/json.js vendor/formatters/json-with-metadata.js
 
 node_modules: package-lock.json
 	npm install --no-save
 	npx patch-package
 	@touch node_modules
+
+# Vendor formatters from node_modules
+vendor/formatters/%.js: node_modules/eslint/lib/cli-engine/formatters/%.js
+	@mkdir -p vendor/formatters
+	@cp $< $@
+
+.PHONY: vendor
+vendor: node_modules $(VENDOR_FORMATTERS)
+	@echo "/**" > vendor/formatters/index.js
+	@echo " * Bundled formatters for eslint-cli-bundle" >> vendor/formatters/index.js
+	@echo " * " >> vendor/formatters/index.js
+	@echo " * These formatters are vendored from ESLint v9.39.2 to avoid" >> vendor/formatters/index.js
+	@echo " * dynamic import issues when the bundle is installed as a dependency." >> vendor/formatters/index.js
+	@echo " * " >> vendor/formatters/index.js
+	@echo " * License: MIT (https://github.com/eslint/eslint/blob/main/LICENSE)" >> vendor/formatters/index.js
+	@echo " */" >> vendor/formatters/index.js
+	@echo "" >> vendor/formatters/index.js
+	@echo "\"use strict\";" >> vendor/formatters/index.js
+	@echo "" >> vendor/formatters/index.js
+	@echo "module.exports = {" >> vendor/formatters/index.js
+	@echo "	stylish: require(\"./stylish\")," >> vendor/formatters/index.js
+	@echo "	html: require(\"./html\")," >> vendor/formatters/index.js
+	@echo "	json: require(\"./json\")," >> vendor/formatters/index.js
+	@echo "	\"json-with-metadata\": require(\"./json-with-metadata\")," >> vendor/formatters/index.js
+	@echo "};" >> vendor/formatters/index.js
+	@echo "Vendored formatters updated"
 
 .PHONY: deps
 deps: node_modules
