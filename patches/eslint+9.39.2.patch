@@ -7,7 +7,7 @@ index 92e90b3..102ed6e 100644
  				formatterPath = path.resolve(
  					__dirname,
 -					"../",
-+					"../node_modules/eslint/lib",
++					"",
  					"cli-engine",
  					"formatters",
  					`${normalizedFormatName}.js`,
