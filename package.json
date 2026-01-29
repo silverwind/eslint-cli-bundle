@@ -1,6 +1,6 @@
 {
   "name": "eslint-cli-bundle",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Bundled version of eslint",
   "author": "silverwind",
   "repository": "silverwind/eslint-cli-bundle",
