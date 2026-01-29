@@ -28,16 +28,17 @@ build: node_modules $(DIST_FILES)
 $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
 	npx tsdown
 	chmod +x $(DIST_FILES)
-	mkdir -p cli-engine/formatters shared
+	mkdir -p dist/cli-engine/formatters dist/shared
 	for f in node_modules/eslint/lib/cli-engine/formatters/*.js; do \
-		cp "$$f" "cli-engine/formatters/$$(basename $$f .js).cjs"; \
+		cp "$$f" "dist/cli-engine/formatters/$$(basename $$f .js).cjs"; \
 	done
-	cp node_modules/eslint/lib/cli-engine/formatters/*.json cli-engine/formatters/
+	cp node_modules/eslint/lib/cli-engine/formatters/*.json dist/cli-engine/formatters/
 	for f in node_modules/eslint/lib/shared/*.js; do \
-		cp "$$f" "shared/$$(basename $$f .js).cjs"; \
+		cp "$$f" "dist/shared/$$(basename $$f .js).cjs"; \
 	done
-	sed -i 's/`formatters`,`$${t}\.js/`formatters`,`$${t}.cjs/g' $(DIST_FILES)
-	sed -i 's|require("../../shared/\([^"]*\)")|require("../../shared/\1.cjs")|g' cli-engine/formatters/*.cjs
+	sed -i.bak 's/`formatters`,`$${t}\.js/`formatters`,`$${t}.cjs/g' $(DIST_FILES) && rm $(DIST_FILES).bak
+	sed -i.bak 's|,`\.\./`,`cli-engine`|,`cli-engine`|g' $(DIST_FILES) && rm $(DIST_FILES).bak
+	sed -i.bak 's|require("../../shared/\([^"]*\)")|require("../../shared/\1.cjs")|g' dist/cli-engine/formatters/*.cjs && rm dist/cli-engine/formatters/*.bak
 
 .PHONY: publish
 publish: node_modules
