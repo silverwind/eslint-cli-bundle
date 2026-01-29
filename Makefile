@@ -31,7 +31,6 @@ vendor: node_modules $(VENDOR_FORMATTERS)
 	@echo "	json: require(\"./json\")," >> vendor/formatters/index.js
 	@echo "	\"json-with-metadata\": require(\"./json-with-metadata\")," >> vendor/formatters/index.js
 	@echo "};" >> vendor/formatters/index.js
-	@echo "Vendored formatters updated"
 
 .PHONY: deps
 deps: node_modules
