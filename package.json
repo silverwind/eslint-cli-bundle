@@ -14,10 +14,15 @@
     "dist"
   ],
   "exports": {
+    ".": {
+      "types": "./dist/api.d.ts",
+      "default": "./dist/api.js"
+    },
     "./config": {
       "types": "./dist/config.d.ts",
       "default": "./dist/config.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "engines": {
     "node": ">=20"

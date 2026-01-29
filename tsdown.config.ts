@@ -5,6 +5,7 @@ export default defineConfig(nodeCli({
   entry: {
     "eslint": "./node_modules/eslint/bin/eslint.js",
     "config": "./src/config.js",
+    "api": "./src/api.js",
   },
   url: import.meta.url,
   minify: true,
