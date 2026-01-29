@@ -45,11 +45,6 @@ $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
 	chmod +x $(DIST_FILES)
 	cp node_modules/jiti/dist/babel.cjs dist/babel.cjs
 
-.PHONY: publish
-publish: node_modules
-	git push -u --tags origin master
-	npm publish
-
 .PHONY: update
 update: node_modules
 	npx updates -cu
@@ -57,17 +52,21 @@ update: node_modules
 	npm install
 	@touch node_modules
 
-.PHONY: path
-patch: node_modules build
+.PHONY: publish
+publish: node_modules
+	npm publish
+
+.PHONY: patch
+patch: node_modules lint test
 	npx versions patch package.json package-lock.json
-	@$(MAKE) --no-print-directory build publish
+	git push -u --tags origin master
 
 .PHONY: minor
-minor: node_modules build
+minor: node_modules lint test
 	npx versions minor package.json package-lock.json
-	@$(MAKE) --no-print-directory build publish
+	git push -u --tags origin master
 
 .PHONY: major
-major: node_modules build
+major: node_modules lint test
 	npx versions major package.json package-lock.json
-	@$(MAKE) --no-print-directory build publish
+	git push -u --tags origin master
