@@ -1,3 +1,1 @@
-import {ESLint, Linter, loadESLint, RuleTester, SourceCode} from "eslint";
-
-export {ESLint, Linter, loadESLint, RuleTester, SourceCode};
+export {ESLint, Linter, loadESLint, RuleTester, SourceCode} from "eslint";
