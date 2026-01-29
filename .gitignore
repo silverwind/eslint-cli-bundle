@@ -7,4 +7,6 @@
 /bun.lockb
 /__snapshots__
 .DS_Store
+/cli-engine
+/shared
 

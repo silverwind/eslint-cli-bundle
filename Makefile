@@ -26,8 +26,18 @@ test: node_modules
 build: node_modules $(DIST_FILES)
 
 $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
-	npx tsup
+	npx tsdown
 	chmod +x $(DIST_FILES)
+	mkdir -p cli-engine/formatters shared
+	for f in node_modules/eslint/lib/cli-engine/formatters/*.js; do \
+		cp "$$f" "cli-engine/formatters/$$(basename $$f .js).cjs"; \
+	done
+	cp node_modules/eslint/lib/cli-engine/formatters/*.json cli-engine/formatters/
+	for f in node_modules/eslint/lib/shared/*.js; do \
+		cp "$$f" "shared/$$(basename $$f .js).cjs"; \
+	done
+	sed -i 's/`formatters`,`$${t}\.js/`formatters`,`$${t}.cjs/g' $(DIST_FILES)
+	sed -i 's|require("../../shared/\([^"]*\)")|require("../../shared/\1.cjs")|g' cli-engine/formatters/*.cjs
 
 .PHONY: publish
 publish: node_modules
