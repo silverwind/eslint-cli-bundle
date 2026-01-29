@@ -28,17 +28,17 @@ build: node_modules $(DIST_FILES)
 $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
 	npx tsdown
 	chmod +x $(DIST_FILES)
-	mkdir -p dist/cli-engine/formatters dist/shared
+	mkdir -p patches/cli-engine/formatters patches/shared
 	for f in node_modules/eslint/lib/cli-engine/formatters/*.js; do \
-		cp "$$f" "dist/cli-engine/formatters/$$(basename $$f .js).cjs"; \
+		cp "$$f" "patches/cli-engine/formatters/$$(basename $$f .js).cjs"; \
 	done
-	cp node_modules/eslint/lib/cli-engine/formatters/*.json dist/cli-engine/formatters/
+	cp node_modules/eslint/lib/cli-engine/formatters/*.json patches/cli-engine/formatters/
 	for f in node_modules/eslint/lib/shared/*.js; do \
-		cp "$$f" "dist/shared/$$(basename $$f .js).cjs"; \
+		cp "$$f" "patches/shared/$$(basename $$f .js).cjs"; \
 	done
 	sed -i 's/`formatters`,`$${t}\.js/`formatters`,`$${t}.cjs/g' $(DIST_FILES)
-	sed -i 's|,`\.\./`,`cli-engine`|,`cli-engine`|g' $(DIST_FILES)
-	sed -i 's|require("../../shared/\([^"]*\)")|require("../../shared/\1.cjs")|g' dist/cli-engine/formatters/*.cjs
+	sed -i 's|,`\.\./`,`cli-engine`|,`../patches/cli-engine`|g' $(DIST_FILES)
+	sed -i 's|require("../../shared/\([^"]*\)")|require("../../shared/\1.cjs")|g' patches/cli-engine/formatters/*.cjs
 
 .PHONY: publish
 publish: node_modules
