@@ -20,13 +20,13 @@ lint-fix: node_modules
 
 .PHONY: test
 test: node_modules
-	@exit 0
+	node dist/eslint.js
 
 .PHONY: build
 build: node_modules $(DIST_FILES)
 
 $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
-	npx tsdown
+	npx tsup
 	chmod +x $(DIST_FILES)
 
 .PHONY: publish
