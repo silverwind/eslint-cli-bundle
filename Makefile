@@ -20,7 +20,7 @@ lint-fix: node_modules
 	npx tsc
 
 .PHONY: test
-test: node_modules
+test: $(DIST_FILES)
 	node dist/eslint.js
 
 .PHONY: build
