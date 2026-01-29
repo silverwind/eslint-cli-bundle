@@ -13,6 +13,12 @@
   "files": [
     "dist"
   ],
+  "exports": {
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "default": "./dist/config.js"
+    }
+  },
   "engines": {
     "node": ">=20"
   },
