@@ -7,4 +7,5 @@ export default defineConfig(nodeCli({
   minify: true,
   sourcemap: false,
   shims: true,
+  external: ["jiti"],
 }));

@@ -11,14 +11,22 @@
   },
   "type": "module",
   "files": [
-    "dist"
+    "dist",
+    "patches"
   ],
   "engines": {
     "node": ">=20"
   },
+  "scripts": {
+    "postinstall": "patch-package"
+  },
+  "dependencies": {
+    "jiti": "2.6.1"
+  },
   "devDependencies": {
     "eslint": "9.39.2",
     "eslint-config-silverwind": "118.0.1",
+    "patch-package": "8.0.1",
     "tsdown": "0.20.1",
     "tsdown-config-silverwind": "1.7.3",
     "typescript": "5.9.3",
