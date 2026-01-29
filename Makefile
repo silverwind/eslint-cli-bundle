@@ -29,6 +29,7 @@ build: node_modules $(DIST_FILES)
 $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
 	npx tsdown
 	chmod +x $(DIST_FILES)
+	cp node_modules/jiti/dist/babel.cjs dist/babel.cjs
 
 .PHONY: publish
 publish: node_modules

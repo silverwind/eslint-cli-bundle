@@ -11,17 +11,10 @@
   },
   "type": "module",
   "files": [
-    "dist",
-    "patches"
+    "dist"
   ],
   "engines": {
     "node": ">=20"
-  },
-  "scripts": {
-    "postinstall": "patch-package"
-  },
-  "dependencies": {
-    "jiti": "2.6.1"
   },
   "devDependencies": {
     "eslint": "9.39.2",
