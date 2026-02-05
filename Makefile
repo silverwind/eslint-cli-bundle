@@ -4,7 +4,6 @@ VENDOR_FORMATTERS := vendor/formatters/stylish.js vendor/formatters/html.js vend
 
 node_modules: pnpm-lock.yaml
 	pnpm install
-	pnpm exec patch-package
 	@touch node_modules
 
 # Vendor formatters from node_modules
@@ -60,15 +59,15 @@ publish: node_modules
 
 .PHONY: patch
 patch: node_modules lint test
-	pnpm exec versions patch package.json pnpm-lock.yaml
+	pnpm exec versions patch package.json
 	git push -u --tags origin master
 
 .PHONY: minor
 minor: node_modules lint test
-	pnpm exec versions minor package.json pnpm-lock.yaml
+	pnpm exec versions minor package.json
 	git push -u --tags origin master
 
 .PHONY: major
 major: node_modules lint test
-	pnpm exec versions major package.json pnpm-lock.yaml
+	pnpm exec versions major package.json
 	git push -u --tags origin master
