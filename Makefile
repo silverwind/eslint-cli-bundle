@@ -2,9 +2,9 @@ SOURCE_FILES := node_modules
 DIST_FILES := dist/eslint.js
 VENDOR_FORMATTERS := vendor/formatters/stylish.js vendor/formatters/html.js vendor/formatters/json.js vendor/formatters/json-with-metadata.js
 
-node_modules: package-lock.json
-	npm install --no-save
-	npx patch-package
+node_modules: pnpm-lock.yaml
+	pnpm install
+	pnpm exec patch-package
 	@touch node_modules
 
 # Vendor formatters from node_modules
@@ -27,11 +27,11 @@ deps: node_modules
 
 .PHONY: lint
 lint: node_modules
-	npx tsc
+	pnpm exec tsc
 
 .PHONY: lint-fix
 lint-fix: node_modules
-	npx tsc
+	pnpm exec tsc
 
 .PHONY: test
 test: $(DIST_FILES)
@@ -40,8 +40,8 @@ test: $(DIST_FILES)
 .PHONY: build
 build: node_modules $(DIST_FILES)
 
-$(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
-	npx tsdown
+$(DIST_FILES): $(SOURCE_FILES) pnpm-lock.yaml package.json tsdown.config.ts
+	pnpm exec tsdown
 	chmod +x $(DIST_FILES)
 	cp node_modules/jiti/dist/babel.cjs dist/babel.cjs
 	cp node_modules/eslint/lib/types/config-api.d.ts dist/config.d.ts
@@ -49,26 +49,26 @@ $(DIST_FILES): $(SOURCE_FILES) package-lock.json package.json tsdown.config.ts
 
 .PHONY: update
 update: node_modules
-	npx updates -cu
-	rm -rf node_modules package-lock.json
-	npm install
+	pnpm exec updates -cu
+	rm -rf node_modules pnpm-lock.yaml
+	pnpm install
 	@touch node_modules
 
 .PHONY: publish
 publish: node_modules
-	npm publish
+	pnpm publish
 
 .PHONY: patch
 patch: node_modules lint test
-	npx versions patch package.json package-lock.json
+	pnpm exec versions patch package.json pnpm-lock.yaml
 	git push -u --tags origin master
 
 .PHONY: minor
 minor: node_modules lint test
-	npx versions minor package.json package-lock.json
+	pnpm exec versions minor package.json pnpm-lock.yaml
 	git push -u --tags origin master
 
 .PHONY: major
 major: node_modules lint test
-	npx versions major package.json package-lock.json
+	pnpm exec versions major package.json pnpm-lock.yaml
 	git push -u --tags origin master
