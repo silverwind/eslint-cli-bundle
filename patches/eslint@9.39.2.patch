@@ -1,0 +1,66 @@
+diff --git a/lib/eslint/eslint.js b/lib/eslint/eslint.js
+index 92e90b3..75670a4 100644
+--- a/lib/eslint/eslint.js
++++ b/lib/eslint/eslint.js
+@@ -13,12 +13,20 @@ const { existsSync } = require("node:fs");
+ const fs = require("node:fs/promises");
+ const os = require("node:os");
+ const path = require("node:path");
+-const { pathToFileURL } = require("node:url");
++const { pathToFileURL, fileURLToPath } = require("node:url");
+ const { SHARE_ENV, Worker } = require("node:worker_threads");
+ const { version } = require("../../package.json");
+ const { defaultConfig } = require("../config/default-config");
+ const timing = require("../linter/timing");
+
++// Bundle built-in formatters directly to avoid dynamic import issues
++const builtInFormatters = {
++	stylish: require("../cli-engine/formatters/stylish"),
++	html: require("../cli-engine/formatters/html"),
++	json: require("../cli-engine/formatters/json"),
++	"json-with-metadata": require("../cli-engine/formatters/json-with-metadata"),
++};
++
+ const {
+ 	createDebug,
+
+@@ -1212,6 +1220,39 @@ class ESLint {
+ 		if (!namespace && normalizedFormatName.includes("/")) {
+ 			formatterPath = path.resolve(cwd, normalizedFormatName);
+ 		} else {
++			// Try built-in formatters first (bundled inline)
++			if (builtInFormatters[normalizedFormatName]) {
++				const formatter = builtInFormatters[normalizedFormatName];
++
++				if (typeof formatter !== "function") {
++					throw new TypeError(
++						`Formatter must be a function, but got a ${typeof formatter}.`,
++					);
++				}
++
++				const eslint = this;
++
++				return {
++					format(results, context) {
++						let rulesMeta = null;
++
++						results.sort(compareResultsByFilePath);
++						return formatter(results, {
++							...context,
++							cwd,
++							get rulesMeta() {
++								if (!rulesMeta) {
++									rulesMeta = eslint.getRulesMetaForResults(results);
++								}
++
++								return rulesMeta;
++							},
++						});
++					},
++				};
++			}
++
++			// Fall back to trying to load external formatters
+ 			try {
+ 				const npmFormat = normalizePackageName(
+ 					normalizedFormatName,

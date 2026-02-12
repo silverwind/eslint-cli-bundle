@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@eslint/config-helpers": "0.5.2",
+    "@typescript/native-preview": "7.0.0-dev.20260212.1",
     "eslint": "9.39.2",
     "eslint-config-silverwind": "118.0.1",
     "patch-package": "8.0.1",
@@ -38,6 +39,7 @@
     "typescript": "5.9.3",
     "typescript-config-silverwind": "14.0.0",
     "updates": "17.0.8",
+    "updates-config-silverwind": "1.0.3",
     "versions": "14.0.3"
   }
 }
