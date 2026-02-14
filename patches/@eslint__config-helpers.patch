@@ -1,6 +1,6 @@
 diff --git a/dist/cjs/types.d.cts b/dist/cjs/types.d.cts
 new file mode 100644
-index 0000000..a313ea2
+index 0000000000000000000000000000000000000000..a313ea25999b64378e49bc6dec38024fe6ab13ba
 --- /dev/null
 +++ b/dist/cjs/types.d.cts
 @@ -0,0 +1,29 @@

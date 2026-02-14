@@ -1,7 +1,7 @@
-diff --git a/node_modules/eslint/lib/eslint/eslint.js b/node_modules/eslint/lib/eslint/eslint.js
-index 92e90b3..75670a4 100644
---- a/node_modules/eslint/lib/eslint/eslint.js
-+++ b/node_modules/eslint/lib/eslint/eslint.js
+diff --git a/lib/eslint/eslint.js b/lib/eslint/eslint.js
+index 2bd959884afe6450be3a9a88c19e8727de745ad2..26ac0b140e2d0cae9d51ec7db8d9b9e3bb5849ce 100644
+--- a/lib/eslint/eslint.js
++++ b/lib/eslint/eslint.js
 @@ -13,12 +13,20 @@ const { existsSync } = require("node:fs");
  const fs = require("node:fs/promises");
  const os = require("node:os");
@@ -24,14 +24,14 @@ index 92e90b3..75670a4 100644
  const {
  	createDebug,
  
-@@ -1212,6 +1220,39 @@ class ESLint {
+@@ -1213,6 +1221,39 @@ class ESLint {
  		if (!namespace && normalizedFormatName.includes("/")) {
  			formatterPath = path.resolve(cwd, normalizedFormatName);
  		} else {
 +			// Try built-in formatters first (bundled inline)
 +			if (builtInFormatters[normalizedFormatName]) {
 +				const formatter = builtInFormatters[normalizedFormatName];
-+				
++
 +				if (typeof formatter !== "function") {
 +					throw new TypeError(
 +						`Formatter must be a function, but got a ${typeof formatter}.`,
@@ -59,7 +59,7 @@ index 92e90b3..75670a4 100644
 +					},
 +				};
 +			}
-+			
++
 +			// Fall back to trying to load external formatters
  			try {
  				const npmFormat = normalizePackageName(

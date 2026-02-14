@@ -42,7 +42,7 @@ build: node_modules $(DIST_FILES)
 $(DIST_FILES): $(SOURCE_FILES) pnpm-lock.yaml package.json tsdown.config.ts
 	pnpm exec tsdown
 	chmod +x $(DIST_FILES)
-	cp node_modules/jiti/dist/babel.cjs dist/babel.cjs
+	cp $$(find node_modules/.pnpm/jiti@*/node_modules/jiti/dist/babel.cjs) dist/babel.cjs
 	cp node_modules/eslint/lib/types/config-api.d.ts dist/config.d.ts
 	cp node_modules/eslint/lib/types/index.d.ts dist/api.d.ts
 
