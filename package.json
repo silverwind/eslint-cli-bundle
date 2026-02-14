@@ -24,22 +24,22 @@
     },
     "./package.json": "./package.json"
   },
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.29.3",
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "devDependencies": {
     "@eslint/config-helpers": "0.5.2",
-    "@typescript/native-preview": "7.0.0-dev.20260212.1",
-    "eslint": "10.0.0",
-    "eslint-config-silverwind": "118.0.1",
+    "@typescript/native-preview": "7.0.0-dev.20260214.1",
+    "eslint": "9.39.2",
+    "eslint-config-silverwind": "121.0.5",
     "patch-package": "8.0.1",
-    "tsdown": "0.20.1",
-    "tsdown-config-silverwind": "1.7.3",
+    "tsdown": "0.20.3",
+    "tsdown-config-silverwind": "1.7.5",
     "typescript": "5.9.3",
-    "typescript-config-silverwind": "14.0.0",
-    "updates": "17.0.8",
+    "typescript-config-silverwind": "15.0.0",
+    "updates": "17.5.2",
     "updates-config-silverwind": "1.0.3",
-    "versions": "14.0.3"
+    "versions": "14.1.2"
   }
 }
