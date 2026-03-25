@@ -35,6 +35,7 @@ lint-fix: node_modules
 .PHONY: test
 test: $(DIST_FILES)
 	node dist/eslint.js
+	node test.js
 
 .PHONY: build
 build: node_modules $(DIST_FILES)

@@ -1,9 +1,9 @@
 diff --git a/dist/cjs/types.d.cts b/dist/cjs/types.d.cts
 new file mode 100644
-index 0000000000000000000000000000000000000000..a313ea25999b64378e49bc6dec38024fe6ab13ba
+index 0000000000000000000000000000000000000000..65433dfc657597d454d9345458b7870106d8fdd8
 --- /dev/null
 +++ b/dist/cjs/types.d.cts
-@@ -0,0 +1,29 @@
+@@ -0,0 +1,37 @@
 +/**
 + * @fileoverview Types for this package.
 + */
@@ -16,14 +16,22 @@ index 0000000000000000000000000000000000000000..a313ea25999b64378e49bc6dec38024f
 +export type InfiniteArray<T> = T | InfiniteArray<T>[];
 +
 +/**
++ * A config object that may appear inside of `extends`.
++ * `basePath` and nested `extends` are not allowed on extension config objects.
++ */
++export type ExtensionConfigObject = Omit<ConfigObject, "basePath"> & {
++	extends?: never;
++};
++
++/**
 + * The type of array element in the `extends` property after flattening.
 + */
-+export type SimpleExtendsElement = string | ConfigObject;
++export type SimpleExtendsElement = string | ExtensionConfigObject;
 +
 +/**
 + * The type of array element in the `extends` property before flattening.
 + */
-+export type ExtendsElement = SimpleExtendsElement | InfiniteArray<ConfigObject>;
++export type ExtendsElement = SimpleExtendsElement | InfiniteArray<ExtensionConfigObject>;
 +
 +/**
 + * Config with extends. Valid only inside of `defineConfig()`.
