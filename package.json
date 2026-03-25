@@ -10,6 +10,7 @@
     "eslint-cli-bundle": "dist/eslint.js"
   },
   "type": "module",
+  "sideEffects": false,
   "files": [
     "dist"
   ],
