@@ -13,5 +13,3 @@ if (!results.length) {
 if (!results[0].messages.some(m => m.ruleId === "no-var")) {
   throw new Error("Expected no-var violation");
 }
-
-console.info("ok");
