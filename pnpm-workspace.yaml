@@ -6,3 +6,4 @@ patchedDependencies:
   '@eslint/config-helpers': patches/@eslint__config-helpers.patch
   '@eslint/plugin-kit': patches/@eslint__plugin-kit.patch
   eslint: patches/eslint.patch
+confirmModulesPurge: false
