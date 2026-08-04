@@ -7,3 +7,4 @@ patchedDependencies:
   '@eslint/plugin-kit': patches/@eslint__plugin-kit.patch
   eslint: patches/eslint.patch
 confirmModulesPurge: false
+verifyDepsBeforeRun: false
