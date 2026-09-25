@@ -3,7 +3,10 @@
   "version": "2.0.0",
   "description": "Bundled version of eslint",
   "author": "silverwind",
-  "repository": "silverwind/eslint-cli-bundle",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silverwind/eslint-cli-bundle.git"
+  },
   "license": "BSD-2-Clause",
   "bin": {
     "eslint": "dist/eslint.js",
