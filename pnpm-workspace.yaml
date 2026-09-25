@@ -2,8 +2,7 @@ savePrefix: ''
 updateNotifier: false
 ignoreScripts: true
 minimumReleaseAge: 0
+verifyDepsBeforeRun: false
 patchedDependencies:
   '@eslint/config-helpers': patches/@eslint__config-helpers.patch
-  '@eslint/plugin-kit': patches/@eslint__plugin-kit.patch
   eslint: patches/eslint.patch
-verifyDepsBeforeRun: false

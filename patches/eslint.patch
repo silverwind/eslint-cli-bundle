@@ -1,66 +1,27 @@
 diff --git a/lib/eslint/eslint.js b/lib/eslint/eslint.js
-index 2bd959884afe6450be3a9a88c19e8727de745ad2..26ac0b140e2d0cae9d51ec7db8d9b9e3bb5849ce 100644
+index c6a358d918fc8f9feca2b0f64a7fea7242fdf8ea..f26c662ed91d1d1cb3d839a9baa0ab1a82b1d827 100644
 --- a/lib/eslint/eslint.js
 +++ b/lib/eslint/eslint.js
-@@ -13,12 +13,20 @@ const { existsSync } = require("node:fs");
- const fs = require("node:fs/promises");
- const os = require("node:os");
- const path = require("node:path");
--const { pathToFileURL } = require("node:url");
-+const { pathToFileURL, fileURLToPath } = require("node:url");
- const { SHARE_ENV, Worker } = require("node:worker_threads");
+@@ -18,6 +18,12 @@ const { SHARE_ENV, Worker } = require("node:worker_threads");
  const { version } = require("../../package.json");
  const { defaultConfig } = require("../config/default-config");
  const timing = require("../linter/timing");
- 
-+// Bundle built-in formatters directly to avoid dynamic import issues
 +const builtInFormatters = {
 +	stylish: require("../cli-engine/formatters/stylish"),
 +	html: require("../cli-engine/formatters/html"),
 +	json: require("../cli-engine/formatters/json"),
 +	"json-with-metadata": require("../cli-engine/formatters/json-with-metadata"),
 +};
-+
+ 
  const {
  	createDebug,
+@@ -1270,7 +1276,8 @@ class ESLint {
+ 		let formatter;
  
-@@ -1213,6 +1221,39 @@ class ESLint {
- 		if (!namespace && normalizedFormatName.includes("/")) {
- 			formatterPath = path.resolve(cwd, normalizedFormatName);
- 		} else {
-+			// Try built-in formatters first (bundled inline)
-+			if (builtInFormatters[normalizedFormatName]) {
-+				const formatter = builtInFormatters[normalizedFormatName];
-+
-+				if (typeof formatter !== "function") {
-+					throw new TypeError(
-+						`Formatter must be a function, but got a ${typeof formatter}.`,
-+					);
-+				}
-+
-+				const eslint = this;
-+
-+				return {
-+					format(results, context) {
-+						let rulesMeta = null;
-+
-+						results.sort(compareResultsByFilePath);
-+						return formatter(results, {
-+							...context,
-+							cwd,
-+							get rulesMeta() {
-+								if (!rulesMeta) {
-+									rulesMeta = eslint.getRulesMetaForResults(results);
-+								}
-+
-+								return rulesMeta;
-+							},
-+						});
-+					},
-+				};
-+			}
-+
-+			// Fall back to trying to load external formatters
- 			try {
- 				const npmFormat = normalizePackageName(
- 					normalizedFormatName,
+ 		try {
+-			formatter = (await import(pathToFileURL(formatterPath))).default;
++			formatter = (isBuiltInFormatter && builtInFormatters[normalizedFormatName]) ||
++				(await import(pathToFileURL(formatterPath))).default;
+ 		} catch (ex) {
+ 			// check for formatters that have been removed
+ 			if (isBuiltInFormatter && removedFormatters.has(name)) {
