@@ -1,3 +1,4 @@
+import {execFileSync} from "node:child_process";
 import {ESLint} from "./dist/api.js";
 
 const results = await new ESLint({
@@ -12,3 +13,5 @@ if (!results.length) {
 if (results[0].messages.every(message => message.ruleId !== "no-var")) {
   throw new Error("Expected no-var violation");
 }
+
+execFileSync(process.execPath, ["dist/eslint.js", "--concurrency", "2", "--no-config-lookup", "src"], {stdio: "pipe"});
