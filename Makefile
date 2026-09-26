@@ -1,10 +1,28 @@
-SOURCE_FILES := node_modules
+SOURCE_FILES := node_modules src/api.js src/config.js
 DIST_FILES := dist/eslint.js
 VENDOR_FORMATTERS := vendor/formatters/stylish.js vendor/formatters/html.js vendor/formatters/json.js vendor/formatters/json-with-metadata.js
 
 node_modules: pnpm-lock.yaml
 	pnpm install
 	@touch node_modules
+
+.PHONY: deps
+deps: node_modules
+
+.PHONY: lint
+lint: node_modules build
+	pnpm exec eslint-silverwind --color .
+	pnpm exec tsgo
+
+.PHONY: lint-fix
+lint-fix: node_modules build
+	pnpm exec eslint-silverwind --color . --fix
+	pnpm exec tsgo
+
+.PHONY: test
+test: node_modules build
+	node dist/eslint.js
+	node test.js
 
 # Vendor formatters from node_modules
 vendor/formatters/%.js: node_modules/eslint/lib/cli-engine/formatters/%.js
@@ -21,31 +39,18 @@ vendor: node_modules $(VENDOR_FORMATTERS)
 	@echo "	\"json-with-metadata\": require(\"./json-with-metadata\")," >> vendor/formatters/index.js
 	@echo "};" >> vendor/formatters/index.js
 
-.PHONY: deps
-deps: node_modules
-
-.PHONY: lint
-lint: node_modules
-	pnpm exec tsgo
-
-.PHONY: lint-fix
-lint-fix: node_modules
-	pnpm exec tsgo
-
-.PHONY: test
-test: $(DIST_FILES)
-	node dist/eslint.js
-	node test.js
-
 .PHONY: build
 build: node_modules $(DIST_FILES)
 
 $(DIST_FILES): $(SOURCE_FILES) pnpm-lock.yaml package.json tsdown.config.ts
 	pnpm exec tsdown
-	chmod +x $(DIST_FILES)
 	cp $$(find node_modules/.pnpm/jiti@*/node_modules/jiti/dist/babel.cjs) dist/babel.cjs
 	cp node_modules/eslint/lib/types/config-api.d.ts dist/config.d.ts
 	cp node_modules/eslint/lib/types/index.d.ts dist/api.d.ts
+
+.PHONY: publish
+publish: node_modules
+	pnpm publish --no-git-checks
 
 .PHONY: update
 update: update-js update-actions
@@ -57,14 +62,10 @@ update-js: node_modules
 	pnpm install
 	@touch node_modules
 
-.PHONY: publish
-publish: node_modules
-	pnpm publish --no-git-checks
+.PHONY: update-actions
+update-actions: node_modules
+	pnpm exec updates -u -M actions
 
 .PHONY: patch minor major
 patch minor major: node_modules lint test
 	pnpm exec versions -R $@ package.json
-
-.PHONY: update-actions
-update-actions: node_modules
-	pnpm exec updates -u -M actions
