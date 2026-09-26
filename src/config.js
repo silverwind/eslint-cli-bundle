@@ -1,1 +1,1 @@
-export {defineConfig, globalIgnores} from "eslint/config";
+export {defineConfig, globalIgnores, includeIgnoreFile} from "eslint/config";
