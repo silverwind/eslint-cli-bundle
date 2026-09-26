@@ -1,6 +1,5 @@
 SOURCE_FILES := node_modules src/api.js src/config.js
 DIST_FILES := dist/eslint.js
-VENDOR_FORMATTERS := vendor/formatters/stylish.js vendor/formatters/html.js vendor/formatters/json.js vendor/formatters/json-with-metadata.js
 
 node_modules: pnpm-lock.yaml
 	pnpm install
@@ -23,21 +22,6 @@ lint-fix: node_modules build
 test: node_modules build
 	node dist/eslint.js
 	node test.js
-
-# Vendor formatters from node_modules
-vendor/formatters/%.js: node_modules/eslint/lib/cli-engine/formatters/%.js
-	@mkdir -p vendor/formatters
-	@cp $< $@
-
-.PHONY: vendor
-vendor: node_modules $(VENDOR_FORMATTERS)
-	@echo "\"use strict\";" > vendor/formatters/index.js
-	@echo "module.exports = {" >> vendor/formatters/index.js
-	@echo "	stylish: require(\"./stylish\")," >> vendor/formatters/index.js
-	@echo "	html: require(\"./html\")," >> vendor/formatters/index.js
-	@echo "	json: require(\"./json\")," >> vendor/formatters/index.js
-	@echo "	\"json-with-metadata\": require(\"./json-with-metadata\")," >> vendor/formatters/index.js
-	@echo "};" >> vendor/formatters/index.js
 
 .PHONY: build
 build: node_modules $(DIST_FILES)
