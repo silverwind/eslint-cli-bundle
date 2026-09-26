@@ -34,6 +34,9 @@
   },
   "devDependencies": {
     "@eslint/config-helpers": "0.7.0",
+    "@eslint/core": "1.2.1",
+    "@eslint/plugin-kit": "0.7.3",
+    "@types/estree": "1.0.9",
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "eslint": "10.11.0",
     "eslint-config-silverwind": "151.0.1",

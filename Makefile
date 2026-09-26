@@ -1,4 +1,4 @@
-SOURCE_FILES := node_modules src/api.js src/config.js
+SOURCE_FILES := node_modules src/api.js src/config.js src/types/config-helpers.ts src/types/core.ts src/types/estree.ts src/types/plugin-kit.ts
 DIST_FILES := dist/eslint.js
 
 node_modules: pnpm-lock.yaml
@@ -22,6 +22,7 @@ lint-fix: node_modules build
 test: node_modules build
 	node dist/eslint.js
 	node test.js
+	pnpm exec tsgo --ignoreConfig --noEmit --noResolve --skipLibCheck false --module nodenext --target esnext --strict dist/*.d.ts dist/types/*.d.ts
 
 .PHONY: build
 build: node_modules $(DIST_FILES)
@@ -29,8 +30,8 @@ build: node_modules $(DIST_FILES)
 $(DIST_FILES): $(SOURCE_FILES) pnpm-lock.yaml package.json tsconfig.json tsdown.config.ts
 	pnpm exec tsdown
 	cp $$(find node_modules/.pnpm/jiti@*/node_modules/jiti/dist/babel.cjs) dist/babel.cjs
-	cp node_modules/eslint/lib/types/config-api.d.ts dist/config.d.ts
-	cp node_modules/eslint/lib/types/index.d.ts dist/api.d.ts
+	sed -E 's#from "(@eslint/)?([a-z-]+)"#from "./types/\2.js"#' node_modules/eslint/lib/types/config-api.d.ts > dist/config.d.ts
+	sed -E 's#from "(@eslint/)?([a-z-]+)"#from "./types/\2.js"#' node_modules/eslint/lib/types/index.d.ts > dist/api.d.ts
 
 .PHONY: publish
 publish: node_modules

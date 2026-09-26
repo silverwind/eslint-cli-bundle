@@ -173,6 +173,15 @@ importers:
       '@eslint/config-helpers':
         specifier: 0.7.0
         version: 0.7.0(patch_hash=d91f57060f45a140330b4395458a3b42e045c97b663e4b02afefc118e266183d)
+      '@eslint/core':
+        specifier: 1.2.1
+        version: 1.2.1
+      '@eslint/plugin-kit':
+        specifier: 0.7.3
+        version: 0.7.3
+      '@types/estree':
+        specifier: 1.0.9
+        version: 1.0.9
       '@typescript/native-preview':
         specifier: 7.0.0-dev.20260707.2
         version: 7.0.0-dev.20260707.2
