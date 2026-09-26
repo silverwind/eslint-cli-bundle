@@ -8,7 +8,5 @@ export default defineConfig(nodeCli({
     "api": "./src/api.js",
   },
   url: import.meta.url,
-  minify: true,
-  sourcemap: false,
   shims: true,
 }));
