@@ -6,8 +6,7 @@
 ## Usage
 
 ```sh
-pnpm add -D eslint-cli-bundle
-pnpm exec eslint .
+pnpm dlx eslint-cli-bundle .
 ```
 
 © [silverwind](https://github.com/silverwind), distributed under BSD licence
