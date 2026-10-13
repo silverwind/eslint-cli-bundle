@@ -3,6 +3,4 @@ updateNotifier: false
 ignoreScripts: true
 minimumReleaseAge: 0
 verifyDepsBeforeRun: false
-patchedDependencies:
-  '@eslint/config-helpers': patches/@eslint__config-helpers.patch
-  eslint: patches/eslint.patch
+dlxCacheMaxAge: 0
