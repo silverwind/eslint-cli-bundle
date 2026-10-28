@@ -31,7 +31,7 @@ export default defineConfig([
   ...["estree", "core", "plugin-kit", "config-helpers"].map(name => base({ // one build each, shared dts chunks leak rolldown's __exportAll
     entry: {[`types/${name}`]: `./src/types/${name}.ts`},
     url: import.meta.url,
-    dts: {generator: "tsgo", emitDtsOnly: true},
+    dts: {emitDtsOnly: true},
     plugins: [{
       name: "config-helpers-cjs-types", // its cjs types import a types.d.cts it doesn't ship, use the identical esm one
       load: {
