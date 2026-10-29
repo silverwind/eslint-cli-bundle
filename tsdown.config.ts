@@ -20,6 +20,7 @@ export default defineConfig([
         const search = "formatter = (await import(pathToFileURL(formatterPath))).default;";
         if (!code.includes(search)) throw new Error(`eslint.js no longer contains "${search}"`);
         return code.replace(search, () => `formatter = (isBuiltInFormatter && {
+          __proto__: null,
           stylish: require("../cli-engine/formatters/stylish"),
           html: require("../cli-engine/formatters/html"),
           json: require("../cli-engine/formatters/json"),
