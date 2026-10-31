@@ -11,18 +11,18 @@ deps: node_modules
 .PHONY: lint
 lint: node_modules build
 	pnpm exec eslint-silverwind --color .
-	pnpm exec tsgo
+	pnpm exec tsc
 
 .PHONY: lint-fix
 lint-fix: node_modules build
 	pnpm exec eslint-silverwind --color . --fix
-	pnpm exec tsgo
+	pnpm exec tsc
 
 .PHONY: test
 test: node_modules build
 	node dist/eslint.js
 	node test.js
-	pnpm exec tsgo --ignoreConfig --noEmit --noResolve --skipLibCheck false --module nodenext --target esnext --strict dist/*.d.ts dist/types/*.d.ts
+	pnpm exec tsc --ignoreConfig --noEmit --noResolve --skipLibCheck false --module nodenext --target esnext --strict dist/*.d.ts dist/types/*.d.ts
 
 .PHONY: build
 build: node_modules $(DIST_FILES)

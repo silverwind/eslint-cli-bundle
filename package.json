@@ -2,21 +2,18 @@
   "name": "eslint-cli-bundle",
   "version": "3.0.0",
   "description": "Bundled version of eslint",
-  "author": "silverwind",
+  "author": "silverwind <me@silverwind.io>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/silverwind/eslint-cli-bundle.git"
   },
   "license": "BSD-2-Clause",
+  "type": "module",
+  "sideEffects": false,
   "bin": {
     "eslint": "dist/eslint.js",
     "eslint-cli-bundle": "dist/eslint.js"
   },
-  "type": "module",
-  "sideEffects": false,
-  "files": [
-    "dist"
-  ],
   "exports": {
     ".": {
       "types": "./dist/api.d.ts",
@@ -28,6 +25,9 @@
     },
     "./package.json": "./package.json"
   },
+  "files": [
+    "dist"
+  ],
   "packageManager": "pnpm@12.6.0",
   "engines": {
     "node": "^20.19.0 || ^22.13.0 || >=24"
@@ -37,16 +37,15 @@
     "@eslint/core": "1.2.1",
     "@eslint/plugin-kit": "0.7.3",
     "@types/estree": "1.0.9",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "eslint": "10.11.0",
-    "eslint-config-silverwind": "151.0.1",
+    "eslint-config-silverwind": "155.2.0",
     "jiti": "2.7.0",
-    "tsdown": "0.23.0",
-    "tsdown-config-silverwind": "4.1.4",
-    "typescript": "6.0.3",
+    "tsdown": "0.23.4",
+    "tsdown-config-silverwind": "4.2.0",
+    "typescript": "7.0.2",
     "typescript-config-silverwind": "21.0.1",
     "updates": "19.0.2",
-    "updates-config-silverwind": "4.0.7",
+    "updates-config-silverwind": "4.1.0",
     "versions": "15.5.1"
   }
 }
