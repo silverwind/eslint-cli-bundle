@@ -12,7 +12,6 @@ export default defineConfig([
     },
     url: import.meta.url,
     shims: true,
-    dts: false, // Makefile ships eslint's own d.ts, bundling them breaks names shadowed inside its namespaces
     plugins: [{
       name: "builtin-formatters", // eslint imports formatters from a runtime path, require them so they get bundled
       transform(code: string, id: string) {
@@ -32,7 +31,7 @@ export default defineConfig([
   ...["estree", "core", "plugin-kit", "config-helpers"].map(name => base({ // one build each, shared dts chunks leak rolldown's __exportAll
     entry: {[`types/${name}`]: `./src/types/${name}.ts`},
     url: import.meta.url,
-    dts: {emitDtsOnly: true},
+    dts: {dtsOnly: true},
     plugins: [{
       name: "config-helpers-cjs-types", // its cjs types import a types.d.cts it doesn't ship, use the identical esm one
       load: {
